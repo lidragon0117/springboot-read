@@ -43,6 +43,8 @@ final class AutoConfigurationMetadataLoader {
 	}
 
 	static AutoConfigurationMetadata loadMetadata(ClassLoader classLoader, String path) {
+		// 通过类加载器加载 META-INF/spring-autoconfigure-metadata.properties文件
+		// 从配置文件（spring-autoconfigure-metadata.properties）中加载 AutoConfigurationMetadata
 		try {
 			Enumeration<URL> urls = (classLoader != null) ? classLoader.getResources(path)
 					: ClassLoader.getSystemResources(path);

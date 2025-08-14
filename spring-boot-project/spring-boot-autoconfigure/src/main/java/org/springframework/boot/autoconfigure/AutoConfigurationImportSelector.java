@@ -88,13 +88,21 @@ public class AutoConfigurationImportSelector implements DeferredImportSelector, 
 
 	private ResourceLoader resourceLoader;
 
+	/**
+	 * 初始化核心 方法
+	 * @Enable* 注解的工作原理ImportSelector接口selectImports返回的数组（类的全类名）都会被纳入到spring容器中。
+	 * @param annotationMetadata
+	 * @return
+	 */
 	@Override
 	public String[] selectImports(AnnotationMetadata annotationMetadata) {
 		if (!isEnabled(annotationMetadata)) {
 			return NO_IMPORTS;
 		}
+		// 加载 从配置文件（spring-autoconfigure-metadata.properties）中加载 AutoConfigurationMetadata
 		AutoConfigurationMetadata autoConfigurationMetadata = AutoConfigurationMetadataLoader
 				.loadMetadata(this.beanClassLoader);
+		// 获取所有候选配置类EnableAutoConfiguration
 		AutoConfigurationEntry autoConfigurationEntry = getAutoConfigurationEntry(autoConfigurationMetadata,
 				annotationMetadata);
 		return StringUtils.toStringArray(autoConfigurationEntry.getConfigurations());
@@ -112,8 +120,11 @@ public class AutoConfigurationImportSelector implements DeferredImportSelector, 
 		if (!isEnabled(annotationMetadata)) {
 			return EMPTY_ENTRY;
 		}
+		//获取元注解中的属性
 		AnnotationAttributes attributes = getAttributes(annotationMetadata);
+		// //使用SpringFactoriesLoader 加载classpath路径下META-INF\spring.factories中，
 		List<String> configurations = getCandidateConfigurations(annotationMetadata, attributes);
+		// 去重
 		configurations = removeDuplicates(configurations);
 		Set<String> exclusions = getExclusions(annotationMetadata, attributes);
 		checkExcludedClasses(configurations, exclusions);

@@ -84,6 +84,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.context.support.StandardServletEnvironment;
 
 /**
+ * 使用Java main方法启动Spring应用程序的类。 默认情况下，类将执行以下步骤以启动应用程序：
  * Class that can be used to bootstrap and launch a Spring application from a Java main
  * method. By default class will perform the following steps to bootstrap your
  * application:
@@ -118,6 +119,7 @@ import org.springframework.web.context.support.StandardServletEnvironment;
  * customized before being run:
  *
  * <pre class="code">
+ *      main 方法中的启动方式： SpringApplication application = new SpringApplication(MyApplication.class);
  * public static void main(String[] args) {
  *   SpringApplication application = new SpringApplication(MyApplication.class);
  *   // ... customize application settings here
