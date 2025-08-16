@@ -71,7 +71,7 @@ public class EventPublishingRunListener implements SpringApplicationRunListener,
 
 	@Override
 	public void starting() {
-		// System.out.println("EventPublishingRunListener ----》starting ");
+		 System.out.println("EventPublishingRunListener ---->starting ");
 		this.initialMulticaster.multicastEvent(new ApplicationStartingEvent(this.application, this.args));
 	}
 

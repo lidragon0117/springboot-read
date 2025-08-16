@@ -487,7 +487,7 @@ public class SpringApplication {
 	private <T> Collection<T> getSpringFactoriesInstances(Class<T> type, Class<?>[] parameterTypes, Object... args) {
 		// 获取当前上下文类加载器
 		ClassLoader classLoader = getClassLoader();
-		// 获取到的扩展类名存入set集合中防止重复
+		// 获取到的扩展类名存入set集合中防止重复  META-INF/spring.factories 中加载 EventPublishingRunListener 事件发布监听器
 		Set<String> names = new LinkedHashSet<>(SpringFactoriesLoader.loadFactoryNames(type, classLoader));
 		// 创建扩展点实例
 		List<T> instances = createSpringFactoriesInstances(type, parameterTypes, classLoader, args, names);
@@ -495,6 +495,16 @@ public class SpringApplication {
 		return instances;
 	}
 
+	/**
+	 * 针对扩展点进行实例化，目前会只有一个 org.springframework.boot.context.event.EventPublishingRunListener
+	 * @param type
+	 * @param parameterTypes
+	 * @param classLoader
+	 * @param args
+	 * @param names
+	 * @return
+	 * @param <T>
+	 */
 	@SuppressWarnings("unchecked")
 	private <T> List<T> createSpringFactoriesInstances(Class<T> type, Class<?>[] parameterTypes,
 			ClassLoader classLoader, Object[] args, Set<String> names) {
